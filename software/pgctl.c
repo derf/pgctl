@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 
 	pin_output_mode(AVR_PIN);
 	set_pin(AVR_PIN);
-	sleep(1);
+	usleep(500000);
 
 	for (int cmd = 0; cmd < sizeof(commands); cmd++) {
 		if (!strcmp(argv[1], commands[cmd])) {
