@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 				usleep(5000);
 				clear_pin(AVR_PIN);
 			}
-			usleep(10000);
+			usleep(500000);
 			return 0;
 		}
 	}
