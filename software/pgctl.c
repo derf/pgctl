@@ -27,6 +27,9 @@ int main(int argc, char **argv)
 	if (argc < 2)
 		return 1;
 
+	if (nice(-20) == -1)
+		fputs("warning: unable to renice\n", stderr);
+
 	if (pin_init_user(LPT1) < 0)
 		return 1;
 
