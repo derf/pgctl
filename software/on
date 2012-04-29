@@ -1,0 +1,4 @@
+#!/bin/sh
+
+pgctl mains_on
+pgctl light_on
