@@ -26,7 +26,7 @@ static void save_state(int index)
 	FILE *fh;
 	const char *states[] = {
 		"", "on", "off", "on", "off",
-		"10p", "20p", "40p", "60p", "strobo"
+		"10p", "20p", "40p", "60p", "strobe"
 	};
 
 	umask(S_IWGRP | S_IWOTH);
@@ -47,7 +47,7 @@ static void save_state(int index)
 	if (index <= 2)
 		rename(PATH_MAINS ".new", PATH_MAINS);
 	else
-		rename(PATH_LIGHT ".nem", PATH_LIGHT);
+		rename(PATH_LIGHT ".new", PATH_LIGHT);
 }
 
 int main(int argc, char **argv)
