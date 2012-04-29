@@ -43,7 +43,7 @@ helper show_link => sub {
 app->config(
 	hypnotoad => {
 		accepts  => 10,
-		listen   => ['http://*:8092'],
+		listen   => ['http://*:8093'],
 		pid_file => '/tmp/pgctl.pid',
 		workers  => 1,
 	},
