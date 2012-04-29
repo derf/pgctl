@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 use Mojolicious::Lite;
 use File::Slurp qw(slurp);
+use utf8;
 
 sub handle_request {
 	my $self  = shift;
@@ -33,10 +34,11 @@ helper show_link => sub {
 	$show_state =~ s{p$}{%};
 
 	return sprintf(
-		'<a class="%s %s"  href="/%s/%s">%s</a>',
+		'<a class="%s %s"  href="/%s/%s">%s%s</a>',
 		( $state =~ m{^\d} ) ? "l$state" : $state,
 		( $state eq $state_is ) ? 'cur' : q{},
 		$type, $state, $show_state,
+		($state eq $state_is) ? '<br/>✓' : q{},
 	);
 };
 
