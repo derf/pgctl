@@ -9,12 +9,46 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 /*
  * Assumes that the AVR optocoupler is connected between GND and pin 14.
  */
 
-#define AVR_PIN LP_PIN14
+#define AVR_PIN LP_PIN02
+
+#define PATH_MAINS "/tmp/.pgctl_mains"
+#define PATH_LIGHT "/tmp/.pgctl_light"
+
+static void save_state(int index)
+{
+	FILE *fh;
+	const char *states[] = {
+		"", "on", "off", "on", "off",
+		"10p", "20p", "40p", "60p", "strobo"
+	};
+
+	umask(S_IWGRP | S_IWOTH);
+
+	if (index <= 2)
+		fh = fopen(PATH_MAINS ".new", "w");
+	else
+		fh = fopen(PATH_LIGHT ".new", "w");
+
+	if (fh == NULL)
+		perror("fopen");
+
+	fputs(states[index], fh);
+
+	if (fclose(fh) != 0)
+		perror("fclose");
+
+	if (index <= 2)
+		rename(PATH_MAINS ".new", PATH_MAINS);
+	else
+		rename(PATH_LIGHT ".nem", PATH_LIGHT);
+}
 
 int main(int argc, char **argv)
 {
@@ -37,12 +71,13 @@ int main(int argc, char **argv)
 	set_pin(AVR_PIN);
 	usleep(500000);
 
-	for (int cmd = 0; cmd < sizeof(commands); cmd++) {
+	for (int cmd = 0; cmd < 10; cmd++) {
 		if (!strcmp(argv[1], commands[cmd])) {
+			save_state(cmd);
 			for (int i = -3; i < cmd; i++) {
-				usleep(5000);
+				usleep(4000);
 				set_pin(AVR_PIN);
-				usleep(5000);
+				usleep(4000);
 				clear_pin(AVR_PIN);
 			}
 			usleep(500000);
