@@ -11,6 +11,8 @@ install: pgctl
 	install -m  755 fadeup ${PREFIX}/bin/pgctl_fadeup
 	install -m  755 on ${PREFIX}/bin/pgctl_on
 	install -m  755 off ${PREFIX}/bin/pgctl_off
+	install -m  755 mains ${PREFIX}/bin/pgctl_mains
+	install -m  755 light ${PREFIX}/bin/pgctl_light
 
 uninstall:
 	rm -f ${PREFIX}/bin/pgctl

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+case "$(cat /tmp/.pgctl_mains)" in
+	on)  pgctl mains_off ;;
+	off) pgctl mains_on  ;;
+esac

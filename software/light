@@ -1,0 +1,10 @@
+#!/bin/sh
+
+case "$(cat /tmp/.pgctl_light)" in
+	off) pgctl light_10p ;;
+	10p) pgctl light_20p ;;
+	20p) pgctl light_40p ;;
+	40p) pgctl light_60p ;;
+	60p) pgctl light_on  ;;
+	on)  pgctl light_off ;;
+esac
