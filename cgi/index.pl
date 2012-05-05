@@ -11,6 +11,8 @@ sub handle_request {
 	given ("$type/$state") {
 		when ('all/on')       { system('pgctl_on') }
 		when ('all/off')      { system('pgctl_off') }
+		when ('all/fadeup')   { system('pgctl_fadeup') }
+		when ('all/fadedown') { system('pgctl_fadedown') }
 		when ('mains/on')     { system('pgctl mains_on') }
 		when ('mains/off')    { system('pgctl mains_off') }
 		when ('light/on')     { system('pgctl light_on') }
@@ -30,16 +32,15 @@ helper show_link => sub {
 
 	my $state_is = slurp( "/tmp/.pgctl_${type}", { err_mode => 'quiet', } )
 	  // q{};
-	my $show_state = $state;
-	$show_state =~ s{p$}{%};
-
 	$label //= $state;
+	$label =~ s{p$}{%};
+
 
 	return sprintf(
 		'<a class="%s %s"  href="/%s/%s">%s%s</a>',
 		( $state =~ m{^\d} ) ? "l$state" : $state,
 		( $state eq $state_is ) ? 'cur' : q{},
-		$type, $state, $show_state,
+		$type, $state, $label,
 		($state eq $state_is) ? '<br/>✓' : q{},
 	);
 };
@@ -161,8 +162,8 @@ __DATA__
 <div class="desc">all</div>
 %== show_link('all', 'on')
 %== show_link('all', 'off')
-%== show_link('all', 'fadeup', '~↑')
-%== show_link('all', 'fadedown', '~↓')
+%== show_link('all', 'fadeup', '~&uarr;')
+%== show_link('all', 'fadedown', '~&darr;')
 </div>
 </div>
 </body>
