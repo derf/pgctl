@@ -26,12 +26,14 @@ sub handle_request {
 }
 
 helper show_link => sub {
-	my ( $self, $type, $state ) = @_;
+	my ( $self, $type, $state, $label ) = @_;
 
 	my $state_is = slurp( "/tmp/.pgctl_${type}", { err_mode => 'quiet', } )
 	  // q{};
 	my $show_state = $state;
 	$show_state =~ s{p$}{%};
+
+	$label //= $state;
 
 	return sprintf(
 		'<a class="%s %s"  href="/%s/%s">%s%s</a>',
@@ -159,6 +161,8 @@ __DATA__
 <div class="desc">all</div>
 %== show_link('all', 'on')
 %== show_link('all', 'off')
+%== show_link('all', 'fadeup', '~↑')
+%== show_link('all', 'fadedown', '~↓')
 </div>
 </div>
 </body>
