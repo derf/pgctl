@@ -1,0 +1,23 @@
+#!/bin/sh
+
+if [ -e /tmp/.pgctl_wait ]; then
+	exit 1
+fi
+
+touch /tmp/.pgctl_wait
+
+exec 0</dev/null
+exec 1>/dev/null
+exec 2>/dev/null
+
+(
+while sleep 10; do
+	ping -c 1 htc && break
+	ping -c 1 carbon && break
+	ping -c 1 descent && break
+done
+
+rm /tmp/.pgctl_wait
+
+exec pgctl_on
+) &

@@ -13,6 +13,7 @@ sub handle_request {
 		when ('all/off')      { system('pgctl_off') }
 		when ('all/fadeup')   { system('pgctl_fadeup') }
 		when ('all/fadedown') { system('pgctl_fadedown') }
+		when ('all/wait')     { system('pgctl_wait') }
 		when ('mains/on')     { system('pgctl mains_on') }
 		when ('mains/off')    { system('pgctl mains_off') }
 		when ('light/on')     { system('pgctl light_on') }
@@ -164,6 +165,7 @@ __DATA__
 %== show_link('all', 'off')
 %== show_link('all', 'fadeup', '~&uarr;')
 %== show_link('all', 'fadedown', '~&darr;')
+%== show_link('all', 'wait')
 </div>
 </div>
 </body>
