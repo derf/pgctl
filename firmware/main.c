@@ -9,10 +9,10 @@ volatile enum {
 	CMD_NONE = 0, CMD_NO1, CMD_NO2, CMD_NO3,
 	CMD_MAINS_ON, CMD_MAINS_OFF, CMD_LIGHT_ON, CMD_LIGHT_OFF,
 	CMD_LIGHT_10P, CMD_LIGHT_20P, CMD_LIGHT_40P, CMD_LIGHT_60P,
-	CMD_LIGHT_STROBE
+	CMD_LIGHT_STROBE, CMD_FADE_UP, CMD_FADE_DOWN
 } command = 0;
 volatile enum {
-	L_ON, L_OFF, L_10P, L_20P, L_40P, L_60P, L_STROBE
+	L_ON, L_OFF, L_10P, L_20P, L_40P, L_60P, L_STROBE, L_FUP, L_FDOWN
 } light = L_OFF;
 
 int main(void)
@@ -94,6 +94,18 @@ static void run_command(void)
 			TCCR0A = _BV(COM0B1) | _BV(WGM01) | _BV(WGM00);
 			TCCR0B = _BV(CS02);
 			break;
+		case CMD_FADE_UP:
+			light = L_FUP;
+			OCR0B = 0;
+			TCCR0A = _BV(COM0B1) | _BV(WGM01) | _BV(WGM00);
+			TCCR0B = _BV(CS00);
+			break;
+		case CMD_FADE_DOWN:
+			light = L_FDOWN;
+			OCR0B = 255;
+			TCCR0A = _BV(COM0B1) | _BV(WGM01) | _BV(WGM00);
+			TCCR0B = _BV(CS00);
+			break;
 	}
 	command = CMD_NONE;
 }
@@ -129,6 +141,19 @@ ISR(TIMER1_COMPA_vect)
 	}
 	else if (command)
 		run_command();
+
+	if (light == L_FUP) {
+		if (OCR0B == 255)
+			command = CMD_LIGHT_ON;
+		else
+			OCR0B++;
+	}
+	if (light == L_FDOWN) {
+		if (OCR0B == 0)
+			command = CMD_LIGHT_OFF;
+		else
+			OCR0B--;
+	}
 
 	if (skip)
 		skip--;
