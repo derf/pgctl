@@ -5,15 +5,7 @@ exec 1>/dev/null
 exec 2>/dev/null
 
 (
-pgctl light_10p
-sleep 2
-pgctl light_20p
-sleep 2
-pgctl light_40p
-sleep 2
-pgctl light_60p
-sleep 2
-pgctl light_on
-sleep 2
+pgctl fadeup
+sleep 10
 pgctl mains_on
 ) &
