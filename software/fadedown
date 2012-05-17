@@ -6,5 +6,7 @@ exec 2>/dev/null
 
 (
 pgctl mains_off
-pgctl fadedown
+if [ "$(cat /tmp/.pgctl_light)" != off ]; then
+	pgctl fadedown
+fi
 ) &
