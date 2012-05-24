@@ -121,6 +121,7 @@ ISR(TIMER1_COMPA_vect)
 {
 	static unsigned char skip = 0;
 	static unsigned char boot = 255;
+	static unsigned char fadestep = 6;
 	cli();
 
 	if (boot) {
@@ -145,14 +146,24 @@ ISR(TIMER1_COMPA_vect)
 	if (light == L_FUP) {
 		if (OCR0B == 255)
 			command = CMD_LIGHT_ON;
-		else
-			OCR0B++;
+		else {
+			if (!fadestep) {
+				OCR0B++;
+				fadestep = 6;
+			}
+			fadestep--;
+		}
 	}
 	if (light == L_FDOWN) {
 		if (OCR0B == 0)
 			command = CMD_LIGHT_OFF;
-		else
-			OCR0B--;
+		else {
+			if (!fadestep) {
+				OCR0B--;
+				fadestep = 6;
+			}
+			fadestep--;
+		}
 	}
 
 	if (skip)

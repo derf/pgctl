@@ -8,6 +8,6 @@ exec 2>/dev/null
 if [ "$(cat /tmp/.pgctl_light)" != on ]; then
 	pgctl fadeup
 fi
-sleep 12
+sleep 20
 pgctl mains_on
 ) &
