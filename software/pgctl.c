@@ -29,6 +29,9 @@ static void save_state(int index)
 		"10p", "20p", "40p", "60p", "strobe", "on", "off"
 	};
 
+	if (index > 11)
+		return;
+
 	umask(S_IWGRP | S_IWOTH);
 
 	if (index <= 2)
@@ -55,7 +58,9 @@ int main(int argc, char **argv)
 	const char *commands[] = {
 		"none", "mains_on", "mains_off", "light_on", "light_off",
 		"light_10p", "light_20p", "light_40p", "light_60p",
-		"light_strobe", "fadeup", "fadedown"
+		"light_strobe", "fadeup", "fadedown", "", "", "", "", "",
+		"s1_p1_on", "s1_p1_off", "s1_p2_on", "s1_p2_off", "s1_p3_on",
+		"s1_p3_off", "s1_p4_on", "s1_p4_off", "s1_all_on", "s1_all_off",
 	};
 
 	if (argc < 2)
@@ -71,10 +76,11 @@ int main(int argc, char **argv)
 	set_pin(AVR_PIN);
 	usleep(500000);
 
-	for (int cmd = 0; cmd < 12; cmd++) {
+	for (int cmd = 0; cmd < 59; cmd++) {
 		if (!strcmp(argv[1], commands[cmd])) {
 			save_state(cmd);
 			for (int i = -3; i < cmd; i++) {
+				puts("dit");
 				usleep(4000);
 				set_pin(AVR_PIN);
 				usleep(4000);
