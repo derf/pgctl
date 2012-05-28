@@ -5,12 +5,13 @@
 #define BTNSKIP 4
 
 volatile unsigned char cmd_wait = 0;
+volatile unsigned short command = 0;
 volatile enum {
 	CMD_NONE = 0, CMD_NO1, CMD_NO2, CMD_NO3,
 	CMD_MAINS_ON, CMD_MAINS_OFF, CMD_LIGHT_ON, CMD_LIGHT_OFF,
 	CMD_LIGHT_10P, CMD_LIGHT_20P, CMD_LIGHT_40P, CMD_LIGHT_60P,
 	CMD_LIGHT_STROBE, CMD_FADE_UP, CMD_FADE_DOWN
-} command = 0;
+} COMMAND = 0;
 volatile enum {
 	L_ON, L_OFF, L_10P, L_20P, L_40P, L_60P, L_STROBE, L_FUP, L_FDOWN
 } light = L_OFF;
@@ -23,11 +24,11 @@ int main(void)
 
 	ACSR |= _BV(ACD);
 
-	DDRB = 0;
-	PORTB |= _BV(PB0) | _BV(PB1) | _BV(PB2);
+	DDRB = _BV(DDB5) | _BV(DDB6);
+	PORTB = _BV(PB0) | _BV(PB1) | _BV(PB2);
 
 	DDRD = _BV(DDD4) | _BV(DDD5);
-	PORTD |= _BV(PD2);
+	PORTD = _BV(PD2);
 
 	OCR1A = 0xff;
 	TCCR1A = 0;
@@ -45,9 +46,27 @@ int main(void)
 	return 0;
 }
 
+static void forward_command(void)
+{
+	for (int i = 0; i < command; i++) {
+		PORTB |= _BV(PB5);
+		for (int j = 0; j < 100; j++)
+			asm("wdr");
+		PORTB &= ~_BV(PB5);
+		for (int j = 0; j < 100; j++)
+			asm("wdr");
+	}
+}
+
 static void run_command(void)
 {
+	if (command <= CMD_FADE_DOWN) {
 	switch (command) {
+		case CMD_NONE:
+		case CMD_NO1:
+		case CMD_NO2:
+		case CMD_NO3:
+			break;
 		case CMD_MAINS_ON:
 			PORTD |= _BV(PD4);
 			break;
@@ -107,6 +126,10 @@ static void run_command(void)
 			TCCR0B = _BV(CS00);
 			break;
 	}
+	}
+	else {
+		forward_command();
+	}
 	command = CMD_NONE;
 }
 
@@ -120,8 +143,8 @@ ISR(INT0_vect)
 ISR(TIMER1_COMPA_vect)
 {
 	static unsigned char skip = 0;
-	static unsigned char boot = 255;
-	static unsigned char fadestep = 6;
+	static unsigned char boot = 100;
+	static unsigned char fadestep = 3;
 	cli();
 
 	if (boot) {
@@ -149,7 +172,7 @@ ISR(TIMER1_COMPA_vect)
 		else {
 			if (!fadestep) {
 				OCR0B++;
-				fadestep = 6;
+				fadestep = 2;
 			}
 			fadestep--;
 		}
@@ -160,7 +183,7 @@ ISR(TIMER1_COMPA_vect)
 		else {
 			if (!fadestep) {
 				OCR0B--;
-				fadestep = 6;
+				fadestep = 3;
 			}
 			fadestep--;
 		}
