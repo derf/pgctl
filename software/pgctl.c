@@ -80,7 +80,6 @@ int main(int argc, char **argv)
 		if (!strcmp(argv[1], commands[cmd])) {
 			save_state(cmd);
 			for (int i = -3; i < cmd; i++) {
-				puts("dit");
 				usleep(4000);
 				set_pin(AVR_PIN);
 				usleep(4000);
