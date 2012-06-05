@@ -1,4 +1,4 @@
 #!/bin/sh
 
-pgctl mains_on
 pgctl light_on
+pgctl mains_on

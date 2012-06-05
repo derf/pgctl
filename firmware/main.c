@@ -60,8 +60,8 @@ static void forward_command(void)
 
 static void disable_dataline(void)
 {
-	PORTB |= _BV(PB5) | _BV(PB6);
 	DDRB = 0;
+	PORTB |= _BV(PB5) | _BV(PB6);
 }
 
 static void enable_dataline(void)
@@ -167,8 +167,6 @@ ISR(TIMER1_COMPA_vect)
 		boot--;
 
 		if (boot == 1) {
-			PORTD |= _BV(PD4);
-
 			MCUCR = _BV(ISC01) | _BV(ISC00);
 			GIMSK = _BV(INT0);
 		}
