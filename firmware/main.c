@@ -24,8 +24,8 @@ int main(void)
 
 	ACSR |= _BV(ACD);
 
-	DDRB = 0;
-	PORTB = _BV(PB0) | _BV(PB1) | _BV(PB2) | _BV(PB5) | _BV(PB6);
+	DDRB = _BV(DDB5) | _BV(DDB6);
+	PORTB = _BV(PB0) | _BV(PB1) | _BV(PB2);
 
 	DDRD = _BV(DDD4) | _BV(DDD5);
 	PORTD = _BV(PD2);
@@ -58,20 +58,6 @@ static void forward_command(void)
 	}
 }
 
-static void disable_dataline(void)
-{
-	DDRB = 0;
-	PORTB |= _BV(PB5) | _BV(PB6);
-}
-
-static void enable_dataline(void)
-{
-	for (unsigned int i = 0; i < 65535; i++)
-		asm("wdr");
-	PORTB &= ~_BV(PB5) & ~_BV(PB6);
-	DDRB = _BV(DDB5) | _BV(DDB6);
-}
-
 static void run_command(void)
 {
 	if (command <= CMD_FADE_DOWN) {
@@ -83,10 +69,8 @@ static void run_command(void)
 			break;
 		case CMD_MAINS_ON:
 			PORTD |= _BV(PD4);
-			enable_dataline();
 			break;
 		case CMD_MAINS_OFF:
-			disable_dataline();
 			PORTD &= ~_BV(PD4);
 			break;
 		case CMD_LIGHT_ON:
