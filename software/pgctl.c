@@ -61,6 +61,9 @@ int main(int argc, char **argv)
 		"light_strobe", "fadeup", "fadedown", "", "", "", "", "",
 		"s1_p1_on", "s1_p1_off", "s1_p2_on", "s1_p2_off", "s1_p3_on",
 		"s1_p3_off", "s1_p4_on", "s1_p4_off", "s1_all_on", "s1_all_off",
+		"s2_p1_on", "s2_p1_off", "s2_p2_on", "s2_p2_off", "s2_p3_on",
+		"s2_p3_off", "s2_p4_on", "s2_p4_off", "s2_p5_on", "s2_p5_off",
+		"s2_all_on", "s2_all_off"
 	};
 
 	if (argc < 2)
