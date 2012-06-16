@@ -50,10 +50,10 @@ static void forward_command(void)
 {
 	for (int i = 0; i < command; i++) {
 		PORTB |= _BV(PB5);
-		for (int j = 0; j < 100; j++)
+		for (int j = 0; j < 2048; j++)
 			asm("wdr");
 		PORTB &= ~_BV(PB5);
-		for (int j = 0; j < 100; j++)
+		for (int j = 0; j < 2048; j++)
 			asm("wdr");
 	}
 }
