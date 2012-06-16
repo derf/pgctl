@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ "$(cat /tmp/.pgctl_mains)" != on ]; then
+	pgctl mains_on
+	sleep 20
+fi
+pgctl light_60p
+sleep 2
+pgctl s2_p1_on
+sleep 2
+pgctl s2_p5_off
+sleep 2
+pgctl s1_p3_off

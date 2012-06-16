@@ -14,6 +14,8 @@ install: pgctl
 	install -m  755 mains ${PREFIX}/bin/pgctl_mains
 	install -m  755 light ${PREFIX}/bin/pgctl_light
 	install -m  755 wait ${PREFIX}/bin/pgctl_wait
+	install -m  755 relax ${PREFIX}/bin/pgctl_relax
+	install -m  755 unrelax ${PREFIX}/bin/pgctl_unrelax
 
 uninstall:
 	rm -f ${PREFIX}/bin/pgctl
