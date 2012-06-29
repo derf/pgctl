@@ -84,7 +84,9 @@ __DATA__
 
 	div.all,
 	div.mains,
-	div.light {
+	div.light,
+	div.s1 a,
+	div.s2 a {
 		float: left;
 		text-align: center;
 		margin-left: 1em;
@@ -100,7 +102,9 @@ __DATA__
 
 	div.all a,
 	div.mains a,
-	div.light a {
+	div.light a,
+	div.s1 a,
+	div.s2 a {
 		display: block;
 		width: 4em;
 		height: 3em;
