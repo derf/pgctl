@@ -76,6 +76,7 @@ __DATA__
 	body {
 		font-family: Sans-Serif;
 		font-size: 300%;
+		width: 200%;
 	}
 
 	div.break {
@@ -85,8 +86,8 @@ __DATA__
 	div.all,
 	div.mains,
 	div.light,
-	div.s1 a,
-	div.s2 a {
+	div.s1,
+	div.s2 {
 		float: left;
 		text-align: center;
 		margin-left: 1em;
@@ -154,7 +155,7 @@ __DATA__
 	</style>
 </head>
 <body>
-<div>
+<div class="outer">
 <div class="light">
 <div class="desc">light</div>
 % for my $state (qw(on off 10p 20p 40p 60p strobe)) {
@@ -187,7 +188,7 @@ __DATA__
 %== show_link('s1', 'p5_on')
 %== show_link('s1', 'p5_off');
 </div>
-<div class="s2">
+<div class="s1">
 <div class="desc">switch 2</div>
 %== show_link('s2', 'p1_on')
 %== show_link('s2', 'p1_off');
