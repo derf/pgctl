@@ -15,6 +15,7 @@ install: pgctl
 	install -m  755 light ${PREFIX}/bin/pgctl_light
 	install -m  755 wait ${PREFIX}/bin/pgctl_wait
 	install -m  755 relax ${PREFIX}/bin/pgctl_relax
+	install -m  755 rrelax ${PREFIX}/bin/pgctl_rrelax
 	install -m  755 unrelax ${PREFIX}/bin/pgctl_unrelax
 
 uninstall:
