@@ -5,8 +5,18 @@ exec 1>/dev/null
 exec 2>/dev/null
 
 (
-pgctl mains_off
 if [ "$(cat /tmp/.pgctl_light)" != off ]; then
 	pgctl fadedown
 fi
+pgctl s2_p2_on
+sleep 2
+pgctl s2_p5_off
+sleep 2
+pgctl s1_p3_off
+slep 2
+pgctl s1_p4_off
+sleep 2
+pgctl s3_all_off
+sleep 6
+pgctl mains_off
 ) &
