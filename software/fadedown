@@ -12,7 +12,7 @@ pgctl s2_p2_on
 sleep 2
 pgctl s2_p5_off
 sleep 2
-pgctl s1_p3_off
+pgctl s1_p2_off
 slep 2
 pgctl s1_p4_off
 sleep 2
