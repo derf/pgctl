@@ -17,6 +17,8 @@ install: pgctl
 	install -m  755 relax ${PREFIX}/bin/pgctl_relax
 	install -m  755 rrelax ${PREFIX}/bin/pgctl_rrelax
 	install -m  755 unrelax ${PREFIX}/bin/pgctl_unrelax
+	install -m  755 afk ${PREFIX}/bin/pgctl_afk
+	install -m  755 re ${PREFIX}/bin/pgctl_re
 
 uninstall:
 	rm -f ${PREFIX}/bin/pgctl

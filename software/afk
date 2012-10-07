@@ -1,0 +1,5 @@
+#!/bin/sh
+
+pgctl s1_all_off
+sleep 2
+pgctl s2_all_off
