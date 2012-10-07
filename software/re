@@ -1,5 +1,10 @@
 #!/bin/sh
 
+exec 0</dev/null
+exec 1>/dev/null
+exec 2>/dev/null
+
+(
 if [ "$(cat /tmp/.pgctl_mains)" != on ]; then
 	pgctl mains_on
 	sleep 20
@@ -8,3 +13,4 @@ fi
 pgctl s1_all_on
 sleep 2
 pgctl s2_p5_on
+) &
