@@ -5,11 +5,7 @@ if [ "$(cat /tmp/.pgctl_mains)" != on ]; then
 	sleep 20
 fi
 pgctl light_60p
-sleep 2
 pgctl s2_p1_on
-sleep 2
 pgctl s2_p5_off
-sleep 2
 pgctl s1_p2_off
-sleep 2
 pgctl s2_p2_on

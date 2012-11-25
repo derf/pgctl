@@ -11,6 +11,5 @@ if [ "$(cat /tmp/.pgctl_mains)" != on ]; then
 fi
 
 pgctl s1_all_on
-sleep 2
 pgctl s2_p5_on
 ) &

@@ -5,13 +5,8 @@ if [ "$(cat /tmp/.pgctl_mains)" != on ]; then
 	sleep 20
 fi
 pgctl fadedown
-sleep 2
 pgctl s1_p3_off
-sleep 2
 pgctl s1_p4_off
-sleep 2
 pgctl s2_p2_on
-sleep 2
 pgctl s2_p5_off
-sleep 2
 pgctl s2_p1_off

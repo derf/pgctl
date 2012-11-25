@@ -1,11 +1,7 @@
 #!/bin/sh
 
 pgctl light_on
-sleep 2
 pgctl s2_p5_on
-sleep 2
 pgctl s2_p1_off
-sleep 2
 pgctl s1_p3_on
-sleep 2
 pgctl s2_p2_off
