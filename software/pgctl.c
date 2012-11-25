@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 	const char *commands[] = {
 		"none", "mains_on", "mains_off", "light_on", "light_off",
 		"light_10p", "light_20p", "light_40p", "light_60p",
-		"light_strobe", "fadeup", "fadedown", "", "", "", "", "",
+		"light_strobe", "fadeup", "fadedown", "", "", "", "", "save",
 		"s1_p1_on", "s1_p1_off", "s1_p2_on", "s1_p2_off", "s1_p3_on",
 		"s1_p3_off", "s1_p4_on", "s1_p4_off", "s1_all_on", "s1_all_off",
 		"s2_p1_on", "s2_p1_off", "s2_p2_on", "s2_p2_off", "s2_p3_on",
@@ -66,7 +66,9 @@ int main(int argc, char **argv)
 		"s2_all_on", "s2_all_off", "", "", "",
 		"", "", "", "", "",
 		"s3_p1_on", "s3_p1_off", "s3_p2_on", "s3_p2_off", "",
-		"s3_all_on", "s3_all_off"
+		"s3_all_on", "s3_all_off", "", "", "",
+		"s4_p1_on", "s4_p1_off", "s4_p2_on", "s4_p2_off", "s4_p3_on",
+		"s4_p3_off", "s4_p4_on", "s4_p4_off", "s4_p5_on", "s4_p5_off"
 	};
 
 	if (argc < 2)
@@ -82,7 +84,7 @@ int main(int argc, char **argv)
 	set_pin(AVR_PIN);
 	usleep(500000);
 
-	for (int cmd = 0; cmd < 59; cmd++) {
+	for (int cmd = 0; cmd < 256; cmd++) {
 		if (!strcmp(argv[1], commands[cmd])) {
 			save_state(cmd);
 			for (int i = -3; i < cmd; i++) {
@@ -91,7 +93,7 @@ int main(int argc, char **argv)
 				usleep(4000);
 				clear_pin(AVR_PIN);
 			}
-			usleep(500000);
+			usleep(2500000);
 			return 0;
 		}
 	}
