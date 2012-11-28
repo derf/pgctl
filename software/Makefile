@@ -19,6 +19,8 @@ install: pgctl
 	install -m  755 unrelax ${PREFIX}/bin/pgctl_unrelax
 	install -m  755 afk ${PREFIX}/bin/pgctl_afk
 	install -m  755 re ${PREFIX}/bin/pgctl_re
+	install -m  755 desklight_on ${PREFIX}/bin/pgctl_desklight_on
+	install -m  755 desklight_off ${PREFIX}/bin/pgctl_desklight_off
 
 uninstall:
 	rm -f ${PREFIX}/bin/pgctl

@@ -5,7 +5,6 @@ exec 1>/dev/null
 exec 2>/dev/null
 
 (
-pgctl s4_p1_off
-pgctl s1_all_off
-pgctl s2_all_off
+pgctl s4_p1_on
+pgctl s4_p2_on
 ) &
