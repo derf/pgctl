@@ -68,7 +68,8 @@ int main(int argc, char **argv)
 		"s3_p1_on", "s3_p1_off", "s3_p2_on", "s3_p2_off", "",
 		"s3_all_on", "s3_all_off", "", "", "",
 		"s4_p1_on", "s4_p1_off", "s4_p2_on", "s4_p2_off", "s4_p3_on",
-		"s4_p3_off", "s4_p4_on", "s4_p4_off", "s4_p5_on", "s4_p5_off"
+		"s4_p3_off", "s4_p4_on", "s4_p4_off", "s4_p5_on", "s4_p5_off",
+		"", "", "", "", "", "", "", "", "s4_all_on", "s4_all_off"
 	};
 
 	if (argc < 2)
