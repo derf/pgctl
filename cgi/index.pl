@@ -23,7 +23,7 @@ sub handle_request {
 		when ('light/20p')    { system('pgctl light_20p') }
 		when ('light/10p')    { system('pgctl light_10p') }
 		when ('light/strobe') { system('pgctl light_strobe') }
-		when (/s([1-2])\/p([1-5])_(on|off)/) {
+		when (/s([1-4])\/p([1-5])_(on|off)/) {
 			system("pgctl s${1}_p${2}_${3}");
 		}
 	}
@@ -200,6 +200,24 @@ __DATA__
 %== show_link('s2', 'p4_off');
 %== show_link('s2', 'p5_on')
 %== show_link('s2', 'p5_off');
+</div>
+<div class="desc">switch 3</div>
+%== show_link('s3', 'p1_on')
+%== show_link('s3', 'p1_off');
+%== show_link('s3', 'p2_on')
+%== show_link('s3', 'p2_off');
+</div>
+<div class="desc">switch 4</div>
+%== show_link('s4', 'p1_on')
+%== show_link('s4', 'p1_off');
+%== show_link('s4', 'p2_on')
+%== show_link('s4', 'p2_off');
+%== show_link('s4', 'p3_on')
+%== show_link('s4', 'p3_off');
+%== show_link('s4', 'p4_on')
+%== show_link('s4', 'p4_off');
+%== show_link('s4', 'p5_on')
+%== show_link('s4', 'p5_off');
 </div>
 </div>
 </body>
