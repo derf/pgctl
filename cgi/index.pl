@@ -192,7 +192,7 @@ __DATA__
 %== show_link('s1', 'p5_on')
 %== show_link('s1', 'p5_off');
 </div>
-<div class="s1">
+<div class="s2">
 <div class="desc">switch 2</div>
 %== show_link('s2', 'p1_on')
 %== show_link('s2', 'p1_off');
@@ -205,12 +205,14 @@ __DATA__
 %== show_link('s2', 'p5_on')
 %== show_link('s2', 'p5_off');
 </div>
+<div class="s3">
 <div class="desc">switch 3</div>
 %== show_link('s3', 'p1_on')
 %== show_link('s3', 'p1_off');
 %== show_link('s3', 'p2_on')
 %== show_link('s3', 'p2_off');
 </div>
+<div class="s4">
 <div class="desc">switch 4</div>
 %== show_link('s4', 'p1_on')
 %== show_link('s4', 'p1_off');
