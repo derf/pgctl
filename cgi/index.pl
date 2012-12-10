@@ -87,7 +87,9 @@ __DATA__
 	div.mains,
 	div.light,
 	div.s1,
-	div.s2 {
+	div.s2,
+	div.s3,
+	div.s4 {
 		float: left;
 		text-align: center;
 		margin-left: 1em;
@@ -105,7 +107,9 @@ __DATA__
 	div.mains a,
 	div.light a,
 	div.s1 a,
-	div.s2 a {
+	div.s2 a,
+	div.s3 a,
+	div.s4 a {
 		display: block;
 		width: 4em;
 		height: 3em;
