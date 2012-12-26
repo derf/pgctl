@@ -2,7 +2,7 @@ CFLAGS ?= -pedantic -Wall -Wextra -O2
 PREFIX ?= /usr/local
 
 pgctl: pgctl.c
-	${CC} -o $@ ${CFLAGS} $< -lparapin
+	${CC} -o $@ ${CFLAGS} $<
 	strip $@
 
 install: pgctl

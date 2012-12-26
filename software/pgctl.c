@@ -5,7 +5,6 @@
  */
 
 #include <stdlib.h>
-#include <parapin.h>
 #include <string.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -13,10 +12,8 @@
 #include <sys/stat.h>
 
 /*
- * Assumes that the AVR optocoupler is connected between GND and pin 14.
+ * AVR connected to GPIO3
  */
-
-#define AVR_PIN LP_PIN02
 
 #define PATH_MAINS "/tmp/.pgctl_mains"
 #define PATH_LIGHT "/tmp/.pgctl_light"
@@ -55,6 +52,9 @@ static void save_state(int index)
 
 int main(int argc, char **argv)
 {
+	FILE *fh;
+	int cmd;
+	signed int i;
 	const char *commands[] = {
 		"none", "mains_on", "mains_off", "light_on", "light_off",
 		"light_10p", "light_20p", "light_40p", "light_60p",
@@ -78,21 +78,18 @@ int main(int argc, char **argv)
 	if (nice(-20) == -1)
 		fputs("warning: unable to renice\n", stderr);
 
-	if (pin_init_user(LPT1) < 0)
-		return 1;
-
-	pin_output_mode(AVR_PIN);
-	set_pin(AVR_PIN);
-	usleep(500000);
-
-	for (int cmd = 0; cmd < 256; cmd++) {
+	for (cmd = 0; cmd < 256; cmd++) {
 		if (!strcmp(argv[1], commands[cmd])) {
 			save_state(cmd);
-			for (int i = -3; i < cmd; i++) {
+			for (i = -2; i < cmd; i++) {
 				usleep(4000);
-				set_pin(AVR_PIN);
+				fh = fopen("/sys/class/gpio/gpio3/value", "w");
+				fputs("1\n", fh);
+				fclose(fh);
 				usleep(4000);
-				clear_pin(AVR_PIN);
+				fh = fopen("/sys/class/gpio/gpio3/value", "w");
+				fputs("0\n", fh);
+				fclose(fh);
 			}
 			usleep(2500000);
 			return 0;
