@@ -10,6 +10,33 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/syscall.h>
+
+/**
+ * ioprio is not yet exported by glibc
+ */
+
+#define IOPRIO_BITS      (16)
+#define IOPRIO_CLASS_SHIFT    (13)
+#define IOPRIO_PRIO_MASK ((1UL << IOPRIO_CLASS_SHIFT) - 1)
+
+#define IOPRIO_PRIO_CLASS(mask)    ((mask) >> IOPRIO_CLASS_SHIFT)
+#define IOPRIO_PRIO_DATA(mask)     ((mask) & IOPRIO_PRIO_MASK)
+#define IOPRIO_PRIO_VALUE(class, data)  (((class) << IOPRIO_CLASS_SHIFT) | data)
+
+enum {
+	IOPRIO_CLASS_NONE,
+	IOPRIO_CLASS_RT,
+	IOPRIO_CLASS_BE,
+	IOPRIO_CLASS_IDLE
+};
+
+enum {
+	IOPRIO_WHO_PROCESS = 1,
+	IOPRIO_WHO_PGRP,
+	IOPRIO_WHO_USER
+};
+
 
 /*
  * AVR connected to GPIO3
@@ -77,6 +104,9 @@ int main(int argc, char **argv)
 
 	if (nice(-20) == -1)
 		fputs("warning: unable to renice\n", stderr);
+
+	if (syscall(SYS_ioprio_set, IOPRIO_WHO_PROCESS, 0, IOPRIO_PRIO_VALUE(IOPRIO_CLASS_RT, 0) == -1))
+		fputs("warning: unable to ionice\n", stderr);
 
 	for (cmd = 0; cmd < 256; cmd++) {
 		if (!strcmp(argv[1], commands[cmd])) {
