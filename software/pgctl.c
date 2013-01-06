@@ -112,11 +112,11 @@ int main(int argc, char **argv)
 		if (!strcmp(argv[1], commands[cmd])) {
 			save_state(cmd);
 			for (i = -2; i < cmd; i++) {
-				usleep(4000);
+				usleep(1000);
 				fh = fopen("/sys/class/gpio/gpio3/value", "w");
 				fputs("1\n", fh);
 				fclose(fh);
-				usleep(4000);
+				usleep(1000);
 				fh = fopen("/sys/class/gpio/gpio3/value", "w");
 				fputs("0\n", fh);
 				fclose(fh);
