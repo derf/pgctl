@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= $title %></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+
+	body {
+		font-family: Sans-Serif;
+		font-size: 300%;
+		width: 200%;
+	}
+
+	div.break {
+		clear: both;
+	}
+
+	div.all,
+	div.mains,
+	div.light,
+	div.s1,
+	div.s2,
+	div.s3,
+	div.s4 {
+		float: left;
+		text-align: center;
+		margin-left: 1em;
+		font-variant: small-caps;
+	}
+
+	div.desc {
+		width: 4em;
+		height: 2em;
+		text-align: center;
+		border-bottom: 1px dashed black;
+	}
+
+	div.all div.href,
+	div.mains div.href,
+	div.light div.href,
+	div.s1 div.href,
+	div.s2 div.href,
+	div.s3 div.href,
+	div.s4 div.href {
+		display: block;
+		width: 4em;
+		height: 3em;
+		text-align: center;
+		text-decoration: none;
+	}
+
+	div.on {
+		color: black;
+		background-color: white;
+	}
+
+	div.off {
+		color: white;
+		background-color: black;
+	}
+
+	div.l10p {
+		color: white;
+		background-color: #222222;
+	}
+
+	div.l20p {
+		color: white;
+		background-color: #333333;
+	}
+
+	div.l40p {
+		color: white;
+		background-color: #666666;
+	}
+
+	div.l60p {
+		color: black;
+		background-color: #bbbbbb;
+	}
+
+	div.strobe {
+		color: black;
+		background-color: yellow;
+	}
+
+	div.cur {
+		font-weight: bold;
+	}
+
+	</style>
+	%= javascript '/jquery.js'
+</head>
+<body>
+<div class="outer">
+<div class="light">
+<div class="desc">light</div>
+% for my $state (qw(on off 10p 20p 40p 60p strobe)) {
+%== show_link('light', $state)
+% }
+</div>
+<div class="mains">
+<div class="desc">mains</div>
+%== show_link('mains', 'on')
+%== show_link('mains', 'off')
+</div>
+<div class="all">
+<div class="desc">all</div>
+%== show_link('all', 'on')
+%== show_link('all', 'off')
+%== show_link('all', 'fadeup', '~&uarr;')
+%== show_link('all', 'fadedown', '~&darr;')
+%== show_link('all', 'wait')
+</div>
+<div class="s1">
+<div class="desc">switch 1</div>
+%== show_link('s1', 'p1_on')
+%== show_link('s1', 'p1_off');
+%== show_link('s1', 'p2_on')
+%== show_link('s1', 'p2_off');
+%== show_link('s1', 'p3_on')
+%== show_link('s1', 'p3_off');
+%== show_link('s1', 'p4_on')
+%== show_link('s1', 'p4_off');
+%== show_link('s1', 'p5_on')
+%== show_link('s1', 'p5_off');
+</div>
+<div class="s2">
+<div class="desc">switch 2</div>
+%== show_link('s2', 'p1_on')
+%== show_link('s2', 'p1_off');
+%== show_link('s2', 'p2_on')
+%== show_link('s2', 'p2_off');
+%== show_link('s2', 'p3_on')
+%== show_link('s2', 'p3_off');
+%== show_link('s2', 'p4_on')
+%== show_link('s2', 'p4_off');
+%== show_link('s2', 'p5_on')
+%== show_link('s2', 'p5_off');
+</div>
+<div class="s3">
+<div class="desc">switch 3</div>
+%== show_link('s3', 'p1_on')
+%== show_link('s3', 'p1_off');
+%== show_link('s3', 'p2_on')
+%== show_link('s3', 'p2_off');
+</div>
+<div class="s4">
+<div class="desc">switch 4</div>
+%== show_link('s4', 'p1_on')
+%== show_link('s4', 'p1_off');
+%== show_link('s4', 'p2_on')
+%== show_link('s4', 'p2_off');
+%== show_link('s4', 'p3_on')
+%== show_link('s4', 'p3_off');
+%== show_link('s4', 'p4_on')
+%== show_link('s4', 'p4_off');
+%== show_link('s4', 'p5_on')
+%== show_link('s4', 'p5_off');
+</div>
+</div>
+</body>
+</html>

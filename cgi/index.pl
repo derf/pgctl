@@ -28,6 +28,7 @@ sub handle_request {
 		}
 	}
 
+	say "qwop";
 	$self->render( 'main', title => 'pgctl', );
 }
 
@@ -39,13 +40,22 @@ helper show_link => sub {
 	$label //= $state;
 	$label =~ s{p$}{%};
 
+	my $snippet = <<'EOF';
+<script type="text/javascript">
+$("#l%s%s").click(function() {
+	$.get("/%s/%s")
+})
+</script>
+EOF
+
 
 	return sprintf(
-		'<a class="%s %s"  href="/%s/%s">%s%s</a>',
+		'<div class="href %s %s" id="l%s%s">%s%s</div>' . $snippet,
 		( $state =~ m{^\d} ) ? "l$state" : $state,
 		( $state eq $state_is ) ? 'cur' : q{},
 		$type, $state, $label,
 		($state eq $state_is) ? '<br/>✓' : q{},
+		$type, $state, $type, $state,
 	);
 };
 
@@ -62,169 +72,3 @@ get '/'               => \&handle_request;
 get '/:source/:state' => \&handle_request;
 
 app->start();
-
-__DATA__
-
-@@ main.html.ep
-<!DOCTYPE html>
-<html>
-<head>
-	<title><%= $title %></title>
-	<meta charset="utf-8">
-	<style type="text/css">
-
-	body {
-		font-family: Sans-Serif;
-		font-size: 300%;
-		width: 200%;
-	}
-
-	div.break {
-		clear: both;
-	}
-
-	div.all,
-	div.mains,
-	div.light,
-	div.s1,
-	div.s2,
-	div.s3,
-	div.s4 {
-		float: left;
-		text-align: center;
-		margin-left: 1em;
-		font-variant: small-caps;
-	}
-
-	div.desc {
-		width: 4em;
-		height: 2em;
-		text-align: center;
-		border-bottom: 1px dashed black;
-	}
-
-	div.all a,
-	div.mains a,
-	div.light a,
-	div.s1 a,
-	div.s2 a,
-	div.s3 a,
-	div.s4 a {
-		display: block;
-		width: 4em;
-		height: 3em;
-		text-align: center;
-		text-decoration: none;
-	}
-
-	a.on {
-		color: black;
-		background-color: white;
-	}
-
-	a.off {
-		color: white;
-		background-color: black;
-	}
-
-	a.l10p {
-		color: white;
-		background-color: #222222;
-	}
-
-	a.l20p {
-		color: white;
-		background-color: #333333;
-	}
-
-	a.l40p {
-		color: white;
-		background-color: #666666;
-	}
-
-	a.l60p {
-		color: black;
-		background-color: #bbbbbb;
-	}
-
-	a.strobe {
-		color: black;
-		background-color: yellow;
-	}
-
-	a.cur {
-		font-weight: bold;
-	}
-
-	</style>
-</head>
-<body>
-<div class="outer">
-<div class="light">
-<div class="desc">light</div>
-% for my $state (qw(on off 10p 20p 40p 60p strobe)) {
-%== show_link('light', $state)
-% }
-</div>
-<div class="mains">
-<div class="desc">mains</div>
-%== show_link('mains', 'on')
-%== show_link('mains', 'off')
-</div>
-<div class="all">
-<div class="desc">all</div>
-%== show_link('all', 'on')
-%== show_link('all', 'off')
-%== show_link('all', 'fadeup', '~&uarr;')
-%== show_link('all', 'fadedown', '~&darr;')
-%== show_link('all', 'wait')
-</div>
-<div class="s1">
-<div class="desc">switch 1</div>
-%== show_link('s1', 'p1_on')
-%== show_link('s1', 'p1_off');
-%== show_link('s1', 'p2_on')
-%== show_link('s1', 'p2_off');
-%== show_link('s1', 'p3_on')
-%== show_link('s1', 'p3_off');
-%== show_link('s1', 'p4_on')
-%== show_link('s1', 'p4_off');
-%== show_link('s1', 'p5_on')
-%== show_link('s1', 'p5_off');
-</div>
-<div class="s2">
-<div class="desc">switch 2</div>
-%== show_link('s2', 'p1_on')
-%== show_link('s2', 'p1_off');
-%== show_link('s2', 'p2_on')
-%== show_link('s2', 'p2_off');
-%== show_link('s2', 'p3_on')
-%== show_link('s2', 'p3_off');
-%== show_link('s2', 'p4_on')
-%== show_link('s2', 'p4_off');
-%== show_link('s2', 'p5_on')
-%== show_link('s2', 'p5_off');
-</div>
-<div class="s3">
-<div class="desc">switch 3</div>
-%== show_link('s3', 'p1_on')
-%== show_link('s3', 'p1_off');
-%== show_link('s3', 'p2_on')
-%== show_link('s3', 'p2_off');
-</div>
-<div class="s4">
-<div class="desc">switch 4</div>
-%== show_link('s4', 'p1_on')
-%== show_link('s4', 'p1_off');
-%== show_link('s4', 'p2_on')
-%== show_link('s4', 'p2_off');
-%== show_link('s4', 'p3_on')
-%== show_link('s4', 'p3_off');
-%== show_link('s4', 'p4_on')
-%== show_link('s4', 'p4_off');
-%== show_link('s4', 'p5_on')
-%== show_link('s4', 'p5_off');
-</div>
-</div>
-</body>
-</html>
