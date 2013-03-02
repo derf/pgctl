@@ -1,7 +1,10 @@
 #!/usr/bin/env perl
+use strict;
+use warnings;
+use utf8;
+
 use Mojolicious::Lite;
 use File::Slurp qw(slurp);
-use utf8;
 
 sub handle_request {
 	my $self  = shift;
@@ -48,23 +51,27 @@ $("#l%s%s").click(function() {
 </script>
 EOF
 
-
 	return sprintf(
 		'<div class="href %s %s" id="l%s%s">%s%s</div>' . $snippet,
 		( $state =~ m{^\d} ) ? "l$state" : $state,
 		( $state eq $state_is ) ? 'cur' : q{},
-		$type, $state, $label,
-		($state eq $state_is) ? '<br/>✓' : q{},
-		$type, $state, $type, $state,
+		$type,
+		$state,
+		$label,
+		( $state eq $state_is ) ? '<br/>✓' : q{},
+		$type,
+		$state,
+		$type,
+		$state,
 	);
 };
 
 app->config(
 	hypnotoad => {
-		accepts  => 10,
-		listen   => ['http://*:8093'],
-		pid_file => '/tmp/pgctl.pid',
-		workers  => 1,
+		accept_interval => 0.2,
+		listen          => ['http://*:8093'],
+		pid_file        => '/tmp/pgctl.pid',
+		workers         => 1,
 	},
 );
 
