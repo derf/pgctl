@@ -4,7 +4,6 @@ OLD_MAINS="$(cat /tmp/.pgctl_mains)"
 
 pgctl light_on
 pgctl mains_on
-pgctl s4_p3_on
 
 if [ "${OLD_MAINS}" = on ]; then
 	pgctl s1_all_on
